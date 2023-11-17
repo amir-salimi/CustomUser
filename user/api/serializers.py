@@ -67,8 +67,9 @@ class LoginSerializer(serializers.Serializer):
         email = data["email"]
         password = data["password"]
         if email and password :
-            username = User.objects.get(email=email)
+            
             try:
+                username = User.objects.get(email=email)
                 user = authenticate(request=self.context.get('request'), username=username.username, password=password)
             except:
                 user = None
