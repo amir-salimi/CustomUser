@@ -33,9 +33,10 @@ class RegisterSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = User
-        fields = ['username', "email", "password1", "password2", "phone"]
+        fields = ['username', "email", "password1", "password2", "phone_number"]
         extra_kwargs = {
-            'password': {"write_only" : True}
+            'password1': {"write_only" : True},
+            'password1': {"write_only" : True}
         }
 
     def create(self, validated_data):
@@ -88,3 +89,17 @@ class LoginSerializer(serializers.Serializer):
         return data
 
 
+class ChangePasswordSerilizer(serializers.Serializer):
+
+    class Meta:
+        model = User
+        fields = ["email", "new_password"]
+
+
+    def update(self, instance, validated_data):
+        if instance:
+            instance.set_password(validated_data["new_password"])
+            instance.save()
+            
+
+        
