@@ -30,6 +30,16 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+DRF_APPS = [
+    'rest_framework.authtoken',
+    'corsheaders',
+    'rest_framework',
+]
+
+DJANGO_APPS = [
+    'user',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,14 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user',
-
-    #drf
-    'rest_framework.authtoken',
-    'corsheaders',
-    'rest_framework',
-
 ]
+
+INSTALLED_APPS = INSTALLED_APPS + DRF_APPS + DJANGO_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

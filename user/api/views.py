@@ -9,7 +9,7 @@ from django.contrib.auth import login, get_user_model
 
 from .serializers import RegisterSerializer, LoginSerializer, UserProfileSerializer, ChangePasswordSerilizer
 
-import datetime, jwt
+# import datetime, jwt
 
 User = get_user_model()
 
@@ -17,7 +17,7 @@ class RegiterUserView(APIView):
     serializer_class = RegisterSerializer
 
     def post(self, request):
-        serializer = RegisterSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         data = request.data
