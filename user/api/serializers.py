@@ -10,9 +10,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name", "email", "phone"]
-        # extra_kwargs = {
-        #     'password': {"write_only" : True}
-        # }   
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -33,7 +30,13 @@ class RegisterSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = User
-        fields = ['username', "email", "password1", "password2", "phone_number"]
+        fields = [
+            'username', 
+            "email", 
+            "password1", 
+            "password2", 
+            "phone_number"
+            ]
         extra_kwargs = {
             'password1': {"write_only" : True},
             'password1': {"write_only" : True}
@@ -75,7 +78,11 @@ class LoginSerializer(serializers.Serializer):
             
             try:
                 username = User.objects.get(email=email)
-                user = authenticate(request=self.context.get('request'), username=username.username, password=password)
+                user = authenticate(
+                    request=self.context.get('request'), 
+                    username=username.username, 
+                    password=password
+                    )
             except:
                 user = None
             if user is not None:

@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext as _
+from django.utils import timezone
 
 
 class CustomUser(AbstractUser):
@@ -12,11 +13,11 @@ class CustomUser(AbstractUser):
     )
     phone_number = models.BigIntegerField(verbose_name=_('phone number'), unique=True,
                                           validators=[IRANIAN_PHONE_NUMBER_VALIDATOR])
-    # phone_number = models.BigIntegerField(default=9187600330)
-    email = models.EmailField(null=False)
+    email = models.EmailField(null=False, unique=True)
     
     class Meta:
         ordering = ['date_joined']
 
     def __str__(self):
         return self.username
+
