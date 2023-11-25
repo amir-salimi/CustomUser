@@ -46,11 +46,12 @@ class LoginUserView(APIView):
             data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        if user is None:
+        if user is not None:
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request):
+
         if request.user.is_authenticated:
             return Response(self.serializer_class(request.user).data)
         else:
