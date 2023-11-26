@@ -55,6 +55,11 @@ class CustomUserManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
         return user
-    
+
+
+    @property
+    def is_admin(self):
+        "Is the user a admin member?"
+        return self.admin
 
 
