@@ -78,10 +78,11 @@ class ChangePasswordView(UpdateAPIView):
                 )
             return Response({"message":"success"})
 
-
+from ..models import CustomUserManager
 
 class ProfileUserView(UpdateAPIView):
     serializer_class = UserProfileSerializer
+    model = User
     
     def put(self, request, *args, **kwargs):
         try:
@@ -100,6 +101,10 @@ class ProfileUserView(UpdateAPIView):
                 {"message":"error"}, 
                 status=status.HTTP_400_BAD_REQUEST
                 )
+    
+# from django.contrib.auth.models import BaseUserManager as Manager
+
+
 
     def get(self, request):
         if request.user.is_authenticated:

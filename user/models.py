@@ -22,44 +22,44 @@ class CustomUser(AbstractUser):
         return self.username
     
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, phone, password=None):
-        if not email:
-            raise ValueError("E-mail must be required")
+# class CustomUserManager(BaseUserManager):
+#     def create_user(self, email, phone, password=None):
+#         if not email:
+#             raise ValueError("E-mail must be required")
         
-        if not password:
-            raise ValueError("Password must be required")
+#         if not password:
+#             raise ValueError("Password must be required")
         
-        user = self.model(
-            email=self.normalize_email(email),
-            phone=phone,
-        )
+#         user = self.model(
+#             email=self.normalize_email(email),
+#             phone=phone,
+#         )
 
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
     
-    def create_superuser(self, email, phone, password):
-        if not email:
-            raise ValueError("E-mail must be required")
+#     def create_superuser(self, email, phone, password):
+#         if not email:
+#             raise ValueError("E-mail must be required")
         
-        if not password:
-            raise ValueError("Password must be required")
+#         if not password:
+#             raise ValueError("Password must be required")
 
-        user = self.model(
-            email=self.normalize_email(email),
-            phone=phone,
-            password=password,
-        )
+#         user = self.model(
+#             email=email,
+#             phone=phone,
+#             password=password,
+#         )
 
-        user.is_admin = True
-        user.save(using=self._db)
-        return user
+#         user.is_admin = True
+#         user.save(using=self._db)
+#         return user
+    
 
 
-    @property
-    def is_admin(self):
-        "Is the user a admin member?"
-        return self.admin
+    # @property
+    # def is_admin(self):
+    #     return self.admin
 
 
