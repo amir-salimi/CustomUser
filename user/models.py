@@ -17,10 +17,33 @@ class CustomUser(AbstractUser):
     
     class Meta:
         ordering = ['date_joined']
+        
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.username
     
+    def get_full_name(self) -> str:
+        return super().get_full_name()
+    
+    def is_admin(self) -> bool:
+        return self.is_admin
+    
+    def create_user(self, email:str, phone:int, password:str):
+        user = self.objects.create(
+            phone_number=phone, 
+            email=email, 
+            password=password
+            )
+        return user
+    
+    def create_superuser(self, email:str, phone:int, password:str):
+        user = self.objects.create(
+            phone_number=phone, 
+            email=email, 
+            password=password, 
+            is_admin=True
+            )
+        return user
 
 # class CustomUserManager(BaseUserManager):
 #     def create_user(self, email, phone, password=None):
