@@ -26,7 +26,7 @@ class RegiterUserView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         data = request.data
-        user = User.objects.filter(username=data["username"]).first()
+        user = User.objects.filter(username=data["username"])[:1]
         if user and user.check_password(data["password1"]):
             login(request, user)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -78,6 +78,7 @@ class ChangePasswordView(UpdateAPIView):
                 )
             return Response({"message":"success"})
 
+from django.db.models import Q
 
 
 class ProfileUserView(UpdateAPIView):
@@ -87,12 +88,12 @@ class ProfileUserView(UpdateAPIView):
     def put(self, request, *args, **kwargs):
         try:
             serializer = self.serializer_class(
-                User.objects.filter(id=request.user.id).first(), 
+                User.objects.filter(id=request.user.id)[:1], 
                 data=request.data
                 )
             serializer.is_valid(raise_exception=True)
             serializer.update(
-                instance=User.objects.filter(id=request.user.id).first(), 
+                instance=User.objects.filter(id=request.user.id)[:1], 
                 validated_data=request.data
                 )
             return Response(serializer.data, status=status.HTTP_200_OK)
