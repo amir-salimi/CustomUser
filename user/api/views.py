@@ -6,12 +6,14 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework import status
 
 from django.contrib.auth import login, get_user_model
+from django.db.models import Q
 
-from .serializers import (RegisterSerializer, 
-                          LoginSerializer, 
-                          UserProfileSerializer, 
-                          ChangePasswordSerilizer
-                          )
+from .serializers import (
+    RegisterSerializer, 
+    LoginSerializer, 
+    UserProfileSerializer, 
+    ChangePasswordSerilizer
+    )
 
 # import datetime, jwt
 
@@ -77,14 +79,12 @@ class ChangePasswordView(UpdateAPIView):
                 validated_data=request.data
                 )
             return Response({"message":"success"})
-
-from django.db.models import Q
+        else:
+            return Response(data={"message" : "user is Unauthenticated"}, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
 
 
 class ProfileUserView(UpdateAPIView):
     serializer_class = UserProfileSerializer
-
-    
     def put(self, request, *args, **kwargs):
         try:
             serializer = self.serializer_class(
