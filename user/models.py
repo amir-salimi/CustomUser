@@ -11,12 +11,13 @@ class CustomUser(AbstractUser):
         regex=IRANIAN_PHONE_NUMBER_PATTERN,
         message=_('phone number must be Iranian'),
     )
-    phone_number = models.BigIntegerField(verbose_name=_('phone number'), unique=True,
+    phone_number = models.BigIntegerField(_('Phone Number'), unique=True,
                                           validators=[IRANIAN_PHONE_NUMBER_VALIDATOR])
-    email = models.EmailField(null=False, unique=True)
+    email = models.EmailField(_("E-mail"), null=False, unique=True)
     
     class Meta:
         ordering = ['date_joined']
+        
         
 
     def __str__(self) -> str:
